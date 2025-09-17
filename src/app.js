@@ -57,9 +57,24 @@ app.post("/user", (req, res) => {
 app.use("/test", (req, res) => {
   res.send("Hello from test Server");
 });
+app.use("/error", (req, res, next) => {
+  // Error Handling
+  try {
+    throw new Error("Error");
+  } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
 
-app.use((req, res) => {
-  res.send("Hello from Server");
+// app.use((req, res) => {
+//   res.send("Hello from Server");
+// });
+
+app.use("/errorHandling", (err, req, res, next) => {
+  // Error Handling
+  if (err) {
+    res.status(404).send("Something went wrong");
+  }
 });
 
 app.listen(3000, () => {
