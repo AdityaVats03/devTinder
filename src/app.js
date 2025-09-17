@@ -1,8 +1,20 @@
 const express = require("express");
 const app = express();
+const { adminAuth, userAuth } = require("./middleWares/auth");
+
+app.use("/admin", adminAuth);
+
+app.get("/admin/getAllData", (req, res) => {
+  res.send("User Data sent");
+});
+
+app.get("/admin/deleteAllData", (req, res) => {
+  res.send(" Data Deleted Successfully");
+});
 
 app.get(
   "/user",
+  userAuth,
   (req, res, next) => {
     next();
     res.send("1st Response");
