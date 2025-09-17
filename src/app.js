@@ -1,9 +1,31 @@
 const express = require("express");
 const app = express();
 
-// app.get("/user", (req, res) => {
-//   res.send({ firstName: "Aditya", lastname: "Sharma" });
-// });
+app.get(
+  "/user",
+  (req, res, next) => {
+    next();
+    res.send("1st Response");
+    // next()
+  },
+  [
+    // can write this syntax too
+    (req, res, next) => {
+      // res.send("2nd Resonse");
+      next();
+    },
+    (req, res, next) => {
+      next();
+    },
+    (req, res, next) => {
+      next();
+    },
+  ],
+  (req, res) => {
+    // res.send("5th Resonse");
+    next();
+  }
+);
 
 app.get("/user", (req, res) => {
   console.log(req.query);
